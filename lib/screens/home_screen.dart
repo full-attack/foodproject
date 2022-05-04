@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/reciept.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -15,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeState extends State<HomeScreen> {
   File? imageFile;
   List<String> foodNames = [];
+  List<String> recipeNames = [];
+  TextEditingController foodNamesTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,9 @@ class _HomeState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(
+                  height: 30,
+                ),
                 Text(
                   'Загрузите фото, на котором видны Ваши продукты. К примеру это может быть фото холодильника',
                   style: TextStyle(
@@ -92,24 +99,60 @@ class _HomeState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Material(
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          foodNames.map((e) => Text(e))
-                        ]
-                    )
+                Container(
+                  height: 300,
+                  child: Material(
+                    child: TextField(
+                      maxLines: null,
+                      expands: true,
+                      controller: foodNamesTextController,
+                    ),
+                  ),
                 ),
+                // Material(
+                //     child: Column(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           ...foodNames.map((e) => Text(e))
+                //         ]
+                //     )
+                // ),
                 const SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
-                  child: Text("Перейти к списку рецептов"),
-                  onPressed: () => Upload(imageFile!),
+                  child: Text("Распознать продукты"),
+                  onPressed: () => getFoodNames(imageFile!),
                   //color: Color(0xff24997f),
                   //textColor: Colors.white,
                   //shape: RoundedRectangleBorder(
                   //borderRadius: BorderRadius.all(Radius.circular(25))),
+                ),
+                ElevatedButton(
+                  child: Text("Перейти к списку продуктов"),
+                  onPressed: () {
+                    var foodNames = foodNamesTextController.text
+                        .trim()
+                        .split('\n')
+                        .map((e) => e.trim())
+                        .where((element) => element.isNotEmpty)
+                        .toList();
+                    getRecipes(foodNames);
+                  },
+                  //color: Color(0xff24997f),
+                  //textColor: Colors.white,
+                  //shape: RoundedRectangleBorder(
+                  //borderRadius: BorderRadius.all(Radius.circular(25))),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Material(
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [...recipeNames.map((e) => Text(e))])),
                 ),
                 // Container(
                 //     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
@@ -149,30 +192,59 @@ class _HomeState extends State<HomeScreen> {
     }
   }
 
-
-  Future Upload(File imageFile) async {
+  Future getFoodNames(File imageFile) async {
     var headers = {
-      'Authorization': 'Bearer dc14a17ca4e34b79e0cf0773ac83df914e7e15f7'
+      'Authorization': 'Bearer b63354c6aed233ca536839df9a4f4764d97151d6'
     };
-    var request = http.MultipartRequest(
+    var request1 = http.MultipartRequest(
         'POST',
         Uri.parse(
             'https://api.logmeal.es/v2/image/recognition/complete/v1.0?language=eng'));
-    request.files
+    request1.files
         .add(await http.MultipartFile.fromPath('image', imageFile.path));
-    request.headers.addAll(headers);
+    request1.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+    http.StreamedResponse response1 = await request1.send();
     foodNames = [];
+    foodNamesTextController.clear();
 
-    if (response.statusCode == 200) {
-      var s = (await response.stream.bytesToString());
+    if (response1.statusCode == 200) {
+      var s = (await response1.stream.bytesToString());
       var body = jsonDecode(s)['recognition_results'] as List;
-      setState((){
-        foodNames = body.map((e) => e['name'] as String).toList();
-      });
+
+      foodNames = body.map((e) => e['name'] as String).toList();
+      foodNamesTextController.text = foodNames.join('\n');
+    }
+
+    setState(() {});
+  }
+
+  Future getRecipes(List<String> foodNames) async {
+    recipeNames = [];
+    print('Looking for ${foodNames}');
+    if (foodNames.isEmpty) {
+      return;
+    }
+    var request2 = http.Request(
+        'GET',
+        Uri.parse(
+            'https://api.edamam.com/api/recipes/v2?app_id=11a8f975&app_key=02161a656317e22305c5d3880a77178a&type=public&q=${foodNames
+                .join(',')}'));
+    print(request2.url);
+    http.StreamedResponse response2 = await request2.send();
+
+    if (response2.statusCode == 200) {
+      var r = (await response2.stream.bytesToString());
+      var hits = jsonDecode(r)['hits'] as List;
+      var reciepts = hits.map((e) => Reciept.fromJson(e['recipe'])).toList();
+      recipeNames = reciepts.map((e) => e.label).toList();
+      // .map((e) => e['recipe']?['label'] as String? ?? '')
+      // .where((element) => element.isNotEmpty)
+      // .toList();
+      print("recipeNames: $recipeNames");
     } else {
-      print(response.reasonPhrase);
+      print(response2.reasonPhrase);
+    }
+      setState(() {});
     }
   }
-}
