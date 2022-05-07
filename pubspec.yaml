@@ -39,6 +39,8 @@ dependencies:
   flutter_svg: ^1.0.3
   flutter_launcher_icons: ^0.9.2
   http: ^0.13.4
+  camera:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:
