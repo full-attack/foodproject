@@ -76,165 +76,7 @@ class _HomeState extends State<HomeScreen> {
         }),
       ),
     );
-  } // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: backgroundColor,
-  //     body: LayoutBuilder(
-  //       builder: (BuildContext context, BoxConstraints viewportConstraints) {
-  //         return SingleChildScrollView(
-  //           child: ConstrainedBox(
-  //             constraints:
-  //             BoxConstraints(minHeight: viewportConstraints.maxHeight),
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 const SizedBox(
-  //                   height: 30,
-  //                 ),
-  //                 Text(
-  //                   'Загрузите фото, на котором видны Ваши продукты. К примеру это может быть фото холодильника',
-  //                   style: TextStyle(
-  //                       color: Color(0xffffffff),
-  //                       fontSize: 20,
-  //                       decoration: TextDecoration.none,
-  //                       fontWeight: FontWeight.w500,
-  //                       fontFamily: 'Palanquin'),
-  //                 ),
-  //                 if (imageFile != null)
-  //                   Container(
-  //                     width: 300,
-  //                     height: 300,
-  //                     alignment: Alignment.center,
-  //                     decoration: BoxDecoration(
-  //                       color: Colors.grey,
-  //                       image: DecorationImage(
-  //                           image: FileImage(imageFile!), fit: BoxFit.cover),
-  //                       //border: Border.all(width: 8, color: Colors.black),
-  //                       borderRadius: BorderRadius.circular(15.0),
-  //                     ),
-  //                   )
-  //                 else
-  //                   Container(
-  //                     width: 300,
-  //                     height: 300,
-  //                     alignment: Alignment.center,
-  //                     decoration: BoxDecoration(
-  //                       color: Color(0xffa7c8fd),
-  //                       //border: Border.all(width: 8, color: Colors.black12),
-  //                       borderRadius: BorderRadius.circular(15.0),
-  //                     ),
-  //                     child: const Text(
-  //                       'Image should appear here',
-  //                       style: TextStyle(
-  //                           color: Color(0xffffffff),
-  //                           fontSize: 30,
-  //                           decoration: TextDecoration.none,
-  //                           fontWeight: FontWeight.w500,
-  //                           fontFamily: 'Palanquin'),
-  //                     ),
-  //                   ),
-  //                 const SizedBox(
-  //                   height: 20,
-  //                 ),
-  //                 Row(
-  //                   children: [
-  //                     Expanded(
-  //                       child: ElevatedButton(
-  //                           onPressed: () => getImage(source: ImageSource.camera),
-  //                           child: const Text('Capture Image',
-  //                               style: TextStyle(fontSize: 18))),
-  //                     ),
-  //                     const SizedBox(
-  //                       width: 20,
-  //                     ),
-  //                     Expanded(
-  //                       child: ElevatedButton(
-  //                           onPressed: () =>
-  //                               getImage(source: ImageSource.gallery),
-  //                           child: const Text('Select Image',
-  //                               style: TextStyle(fontSize: 18))),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 Container(
-  //                   height: 300,
-  //                   child: Material(
-  //                     child: TextField(
-  //                       maxLines: null,
-  //                       expands: true,
-  //                       controller: foodNamesTextController,
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 // Material(
-  //                 //     child: Column(
-  //                 //         mainAxisSize: MainAxisSize.min,
-  //                 //         children: [
-  //                 //           ...foodNames.map((e) => Text(e))
-  //                 //         ]
-  //                 //     )
-  //                 // ),
-  //                 const SizedBox(
-  //                   height: 30,
-  //                 ),
-  //                 ElevatedButton(
-  //                   child: Text("Распознать продукты"),
-  //                   onPressed: () => getFoodNames(imageFile!),
-  //                   //color: Color(0xff24997f),
-  //                   //textColor: Colors.white,
-  //                   //shape: RoundedRectangleBorder(
-  //                   //borderRadius: BorderRadius.all(Radius.circular(25))),
-  //                 ),
-  //                 ElevatedButton(
-  //                   child: Text("Перейти к списку продуктов"),
-  //                   onPressed: () {
-  //                     var foodNames = foodNamesTextController.text
-  //                         .trim()
-  //                         .split('\n')
-  //                         .map((e) => e.trim())
-  //                         .where((element) => element.isNotEmpty)
-  //                         .toList();
-  //                     getRecipes(foodNames);
-  //                   },
-  //                   //color: Color(0xff24997f),
-  //                   //textColor: Colors.white,
-  //                   //shape: RoundedRectangleBorder(
-  //                   //borderRadius: BorderRadius.all(Radius.circular(25))),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 30,
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(8.0),
-  //                   child: Material(
-  //                       child: Column(
-  //                           mainAxisSize: MainAxisSize.min,
-  //                           children: [...recipeNames.map((e) => Text(e))])),
-  //                 ),
-  //                 // Container(
-  //                 //     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-  //                 //     height: 100,
-  //                 //     child: Card(
-  //                 //         child: FutureBuilder(
-  //                 //           future: Upload(imageFile!),
-  //                 //           builder: (context, snapshot) {
-  //                 //             if (snapshot.data == null) {
-  //                 //               return Container()
-  //                 //             }
-  //                 //
-  //                 //           },
-  //                 //         )
-  //                 //     )
-  //                 // )
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
+  }
 
   Future getImage({required ImageSource source}) async {
     if (_cameraController == null) {
@@ -267,7 +109,7 @@ class _HomeState extends State<HomeScreen> {
 
   Future getFoodNames(File imageFile) async {
     var headers = {
-      'Authorization': 'Bearer aea9217748817471a5af8ada6bd839a457addcf1'
+      'Authorization': 'Bearer 5db40850e92a77f8a7128460ac9b2e71630f64b8'
     };
     var request1 = http.MultipartRequest(
         'POST',
@@ -287,6 +129,8 @@ class _HomeState extends State<HomeScreen> {
 
       foodNames = body.map((e) => e['name'] as String).toList();
       foodNamesTextController.text = foodNames.join('\n');
+    } else {
+      print(await response1.stream.bytesToString());
     }
 
     setState(() {});
@@ -502,7 +346,7 @@ class _HomeState extends State<HomeScreen> {
                child: Padding(
                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                  child: Text(recipes.isEmpty ?
-                 "Eh... while there's nothing, take a picture!"
+                 "Eh... nothing here yet, take a picture!"
                      : 'Wow! Found  ${recipes.length} recipes'
                    , textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
                )
@@ -511,60 +355,105 @@ class _HomeState extends State<HomeScreen> {
        ),
        Expanded(
          child: ListView.builder(
-                 itemExtent: 396,
-                 shrinkWrap: true,
-                 itemCount: recipes.length,
+                 // itemExtent: 396,
+                 // shrinkWrap: true,
+                 itemCount: recipes.length + 1,
                  itemBuilder: (context, index) {
+                   if (index == recipes.length) {
+                     return buyMe();
+                   }
                    var item = recipes[index];
-                   return Padding(
-                     padding: const EdgeInsets.only(bottom: 16.0),
-                     child: ClipRRect(
-                       clipBehavior: Clip.hardEdge,
-                       borderRadius: BorderRadius.circular(32),
-                       child: Container(
-                         height: 400,
-                         alignment: Alignment.center,
-                         child: InkWell(
-                           onTap: () {
-                             Navigator.of(context).push(
-                                 MaterialPageRoute(
-                                     builder: (context) =>
-                                         RecipeWidget(item)));
-                           },
-                           child: Column(
-                             mainAxisSize: MainAxisSize.min,
-                             children: [
-                               FittedBox(
-                                   fit: BoxFit.fill,
-                                   alignment: Alignment.center,
-                                   child: Transform.scale(
-                                       scale: 1.1,
-                                       child: item.image.isEmpty ? Image.asset('assets/images/bgPattern.jpg') : Image.network(item.image, errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/bgPattern.jpg'),))),
-                               Container(
-                                   alignment: Alignment.topCenter,
-                                   height: 80,
-                                   color: Colors.white,
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: Text(item.label, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
-                                   )
-                               ),
-                             ],
+                   return Container(
+                     height: 396,
+                     child: Padding(
+                       padding: const EdgeInsets.only(bottom: 16.0),
+                       child: ClipRRect(
+                         clipBehavior: Clip.hardEdge,
+                         borderRadius: BorderRadius.circular(32),
+                         child: Container(
+                           height: 400,
+                           alignment: Alignment.center,
+                           child: InkWell(
+                             onTap: () {
+                               Navigator.of(context).push(
+                                   MaterialPageRoute(
+                                       builder: (context) =>
+                                           RecipeWidget(item)));
+                             },
+                             child: Column(
+                               mainAxisSize: MainAxisSize.min,
+                               children: [
+                                 FittedBox(
+                                     fit: BoxFit.fill,
+                                     alignment: Alignment.center,
+                                     child: Transform.scale(
+                                         scale: 1.1,
+                                         child: item.image.isEmpty ? Image.asset('assets/images/bgPattern.jpg') : Image.network(item.image, errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/bgPattern.jpg'),))),
+                                 Container(
+                                     alignment: Alignment.topCenter,
+                                     height: 80,
+                                     color: Colors.white,
+                                     child: Padding(
+                                       padding: const EdgeInsets.all(8.0),
+                                       child: Text(item.label, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
+                                     )
+                                 ),
+                               ],
+                             ),
                            ),
                          ),
                        ),
                      ),
                    );
                  },
-
-
                ),
-
-
        ),
            ],
          ),
        )
      );
+  }
+
+  Widget buyMe() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: ClipRRect(
+        clipBehavior: Clip.hardEdge,
+        borderRadius: BorderRadius.circular(32),
+        child: InkWell(
+          onTap: () {
+            showDialog(context: context, builder: (context) => Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Material(
+                  child: Container(
+                    height: 300,
+                    alignment: Alignment.center,
+                    color: Colors.redAccent,
+                    child: Text('blah blah'),
+                  ),
+                ),
+              ),
+            ));
+          },
+          child: Container(
+              alignment: Alignment.topCenter,
+              color: Colors.redAccent,
+              height: 80,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                child: RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(text: 'Blah blah blah blah blah ', style: TextStyle(fontWeight: FontWeight.bold),),
+                          TextSpan(text: 'blah blah', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple),),
+                        ]
+                    )
+                ),
+              )
+          ),
+        ),
+      ),
+    );
   }
 }
