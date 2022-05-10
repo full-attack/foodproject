@@ -67,9 +67,9 @@ class _HomeState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Main',
+            label: 'Search',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Receipts')
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Recipes')
         ],
         onTap: (v) => setState(() {
           currentPageIndex = v;
@@ -267,7 +267,7 @@ class _HomeState extends State<HomeScreen> {
 
   Future getFoodNames(File imageFile) async {
     var headers = {
-      'Authorization': 'Bearer b63354c6aed233ca536839df9a4f4764d97151d6'
+      'Authorization': 'Bearer aea9217748817471a5af8ada6bd839a457addcf1'
     };
     var request1 = http.MultipartRequest(
         'POST',
@@ -403,7 +403,7 @@ class _HomeState extends State<HomeScreen> {
                         alignment: Alignment.center,
                         height: 100,
                         child: Text(
-                          'Добавьте фото вашего холодильника',
+                          'Take photos of your products',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       )
@@ -428,7 +428,7 @@ class _HomeState extends State<HomeScreen> {
                       expands: true,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(color: Colors.black26),
-                        hintText: 'Здесь будут ваши продукты',
+                        hintText: 'Here will be your products',
                         fillColor: Colors.white,
                         filled: true,
                         border: InputBorder.none,
@@ -463,7 +463,7 @@ class _HomeState extends State<HomeScreen> {
                           loading = false;
                         });
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Добавьте продукты')));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Add products')));
                       }
                     },
                     child: Container(
@@ -471,7 +471,7 @@ class _HomeState extends State<HomeScreen> {
                       height: 64,
                       alignment: Alignment.center,
                       child: Text(
-                        'Найти рецепты',
+                        'Find Recipes',
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -502,8 +502,8 @@ class _HomeState extends State<HomeScreen> {
                child: Padding(
                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                  child: Text(recipes.isEmpty ?
-                 'Пока ничего нет'
-                     : 'Вау! Нашлось ${recipes.length} рецептов'
+                 "Eh... while there's nothing, take a picture!"
+                     : 'Wow! Found  ${recipes.length} recipes'
                    , textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
                )
            ),
@@ -556,7 +556,11 @@ class _HomeState extends State<HomeScreen> {
                      ),
                    );
                  },
+
+
                ),
+
+
        ),
            ],
          ),
